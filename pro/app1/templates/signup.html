@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <form action="" method="post" novalidate class="signupform">
+        {% csrf_token %}
+        <table>
+            {% for fm in form %}
+            {{fm.label_tag}} <br>
+            {{fm}}
+            {{fm.errors|striptags}} <br><br>
+            {% endfor %}
+            <input type="submit" value="submit" class="sbtn">
+
+        </table>
+    </form> <br>
+    <div class="msg">
+        {% if messages %}
+        {% for m in messages %}
+        {{m}}
+        {% endfor %}
+        {% endif %}
+        <br> <br>
+        <p style="color: red;">Already Have An Account ? <a href="{% url 'login' %}">LOGIN</a></p>
+    </div>
+</body>
+
+</html>

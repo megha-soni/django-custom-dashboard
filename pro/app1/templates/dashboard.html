@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <nav>
+        <div class="n1">
+            <h1 style="font-weight: 100;">Django administration</h1>
+        </div>
+        <div class="n2">
+            <p style="color: #f5dd5d;">WELCOME ,<span style="text-transform: capitalize;"> {{name}}. </span>
+                <a href="{% url 'changepassword' %}" style="color: white;">CHANGE PASSWORD</a> /
+                <a href="{% url 'resetpassword' %}" style="color: white;">RESET PASSWORD</a>/
+                <a href="{% url 'logout' %}" style="color: white;">LOGOUT</a>
+            </p>
+        </div>
+    </nav>
+    <!-- second navbar -->
+    <div class="nav2">
+        <p style="color: white;">Home &rsaquo; Authentication And Authorization &rsaquo; User &rsaquo; {{name}}</p>
+    </div>
+
+
+
+
+
+    <!-- sidebar -->
+    <div class="main">
+        <div class="sidebar">
+            <input type="search" placeholder="start typing to filter..">
+            <div>
+                <p>AUTHENTICATION AND AUTHORIZATION</p>
+                <h5>Groups</h5>
+                {% if users != None %}
+                <h5>All Active Users :-</h5>
+                {% for u in users %}
+                <ul style="margin-left: 1.2em;">
+                    <li>{{u.username}}</li>
+                </ul>
+                {% endfor %}
+                {% endif %}
+                <br>
+                {% if messages %}
+                {% for m in messages %}
+                <span style="color: red;">{{m}}</span>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- rightbar -->
+
+        <form action="" method="post" novalidate class="form">
+
+            {% csrf_token %}
+            <span style="color: grey; font-size: 1.4em;">Change User</span> <br><br>
+            <span style="font-weight: bold; font-size: 1.6em;">{{name}} </span><br><br>
+            {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+            <p>{{error}}</p>
+            {% endfor %}
+            {% endif %}
+            <table>
+                {% for fm in form %}
+                <div class="con">
+
+                    <tr>
+                        <div class="heading">{{fm.label_tag}}</div>
+                    </tr>
+                    <tr>
+                        <div class="content">{{fm}}</div>
+                    </tr>
+                    {{fm.errors|striptags}}<br>
+                    <hr>
+                </div>
+
+                {% endfor %}
+            </table> <br>
+
+            <input type="submit" value="SAVE" class="btn">
+
+        </form>
+    </div>
+</body>
+
+</html>
